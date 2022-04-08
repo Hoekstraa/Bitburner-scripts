@@ -1,0 +1,13 @@
+var server = args[0]
+var securityMin = getServerMinSecurityLevel(server) + 5
+var moneyMin = getServerMaxMoney(server) * 0.75
+
+while (true) {
+	print(getServerMoneyAvailable(server))
+	if (getServerSecurityLevel(server) > securityMin)
+		weaken(server)
+	else if (getServerMoneyAvailable(server) < moneyMin)
+		grow(server)
+	else
+		hack(server)
+}
