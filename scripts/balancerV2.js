@@ -37,7 +37,9 @@ function grow(ns, execServer, targServer) {
     ns.exec("/scripts/grow.js", execServer, growThreadCount, targServer)
 }
 function hack(ns, execServer, targServer) {
-    ns.exec("/scripts/hack.js", execServer, 20, targServer)
+    const maxThreadsAvailable = (ns.getServerMaxRam(execServer) - ns.getServerUsedRam(execServer)) / ns.getScriptRam("/scripts/weaken.js")
+    const threads = Math.min(20, maxThreadsAvailable)
+    ns.exec("/scripts/hack.js", execServer, threads, targServer)
 }
 
 function calcWeakenThreadsNeeded(ns, securityMin, execServer, targServer) {
@@ -54,7 +56,7 @@ function calcWeakenThreadsNeeded(ns, securityMin, execServer, targServer) {
 function calcGrowThreadsNeeded(ns, execServer, targServer) {
     const maxMoney = ns.getServerMaxMoney(targServer)
     const currMoney = ns.getServerMoneyAvailable(targServer)
-    const threadsNeeded = ns.growthAnalyze(targServer, Math.ceil(maxMoney / currMoney))
+    const threadsNeeded = ns.growthAnalyze(targServer, Math.ceil(maxMoney / (currMoney == 0? 1: currMoney)))
     const maxThreadsAvailable = (ns.getServerMaxRam(execServer) - ns.getServerUsedRam(execServer)) / ns.getScriptRam("/scripts/grow.js")
 
     return Math.min(threadsNeeded, maxThreadsAvailable)
