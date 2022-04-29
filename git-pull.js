@@ -2,7 +2,7 @@
 
 let options;
 const argsSchema = [
-    ['github', 'JanSHoekstra'],
+    ['github', 'Hoekstraa'],
     ['repository', 'Bitburner-scripts'],
     ['branch', 'main'],
     ['download', []], // By default, all supported files in the repository will be downloaded. Override with just a subset of files here
