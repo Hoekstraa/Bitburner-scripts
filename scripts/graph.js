@@ -19,7 +19,6 @@ export async function main(ns) {
 
 <script src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"> </script>
 <script>
-
 let nodes = ${JSON.stringify(nodes)};
 let edges = ${JSON.stringify(edges)};
 
@@ -39,9 +38,6 @@ var options = {
 };
 
 let network = new vis.Network(container, data, options);
-
-let params = new URLSearchParams(location.search);
-
 </script>
 </html>
 `
@@ -52,10 +48,7 @@ let params = new URLSearchParams(location.search);
 
 function getServerData(ns, server, origin) {
   let s = ns.getServer(server)
-  // Many scripts are dependent on this
   s.connections = ns.scan(server).filter(server => server != origin)
-  // Might be handy for some scripts to have a lead back home
-  s.origin = origin
   return s
 }
 
